@@ -1,0 +1,66 @@
+const INSUFFICIENT_FUNDS = "INSUFFICIENT_FUNDS";
+const CLOSED = "CLOSED";
+const OPEN = "OPEN";
+
+// handle currenty in pennies to avoid floating point difficulties;
+const CURRENCY_VALUES = [["ONE HUNDRED", 10000],
+                         ["TWENTY", 2000],
+                         ["TEN", 1000],
+                         ["FIVE", 500],
+                         ["ONE", 100],
+                         ["QUARTER", 25],
+                         ["DIME", 10],
+                         ["NICKEL", 5],
+                         ["PENNY", 1]];
+
+function getCashInDrawer(name, cid) {
+  for (var denomination of cid) {
+    if (denomination[0] == name) {
+      return denomination[1] * 100;
+    }
+  }
+}
+
+function checkCashRegister(price, cash, cid) {
+  var change = [];
+  var status = CLOSED;
+
+  var changeRequired = cash*100 - price * 100;
+
+  for (var denomination of CURRENCY_VALUES) {
+    var changeInDrawer = getCashInDrawer(denomination[0], cid);
+
+    var numToReturn = 0
+    while (denomination[1] <= changeRequired && 
+           changeInDrawer > 0) {
+      numToReturn ++;
+      changeInDrawer = changeInDrawer - denomination[1];
+      changeRequired = changeRequired - denomination[1];
+    }
+
+    if (numToReturn > 0) {
+       change[change.length] = [denomination[0], 
+                                numToReturn * denomination[1] / 100];
+    }
+
+    if (changeInDrawer > 0) {
+      status = OPEN;
+    }
+  }  
+
+  if (changeRequired > 0) {
+    status = INSUFFICIENT_FUNDS
+    change = [];
+  }
+
+  if (status === CLOSED) {
+    change = cid;
+  }
+
+  return {
+    status: status,
+    change: change
+  };
+}
+
+checkCashRegister(19.5, 20, [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])

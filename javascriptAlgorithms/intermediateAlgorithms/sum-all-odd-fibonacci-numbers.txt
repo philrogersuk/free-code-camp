@@ -1,0 +1,31 @@
+function getFibonacciNumbers(maxNum) {
+  var numbers = [1, 1];
+
+  while (true) {
+    var nextNum = numbers[numbers.length - 1] +
+                 numbers[numbers.length - 2];
+    if (nextNum > maxNum) {
+      return numbers;
+    }
+    numbers[numbers.length] = nextNum;
+  }
+}
+
+function isOdd(num) {
+  return 1 === num % 2;
+}
+
+function sumFibs(num) {
+  var fibNums = getFibonacciNumbers(num);
+  var result = 0;
+
+  for (var nextFib of fibNums) {
+    if (isOdd(nextFib)) {
+      result = result + nextFib;
+    }
+  }
+
+  return result;
+}
+
+sumFibs(4);

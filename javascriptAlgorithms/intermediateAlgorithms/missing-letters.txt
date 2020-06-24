@@ -1,0 +1,20 @@
+function fearNotLetter(str) {
+  var alphabet = "abcdefghijklmnopqrstuvwxyz"
+  var result = [];
+
+  var firstChar = str.charAt(0);
+  var lastChar = str.charAt(str.length-1);
+
+  for (var i = alphabet.indexOf(firstChar); 
+        i <= alphabet.indexOf(lastChar); 
+        i++) {
+    if (-1 === str.indexOf(alphabet.charAt(i))) {
+      return alphabet.charAt(i);
+    }
+  }
+
+
+  return undefined;
+}
+
+fearNotLetter("abce");
