@@ -1,0 +1,27 @@
+const numbers = [{number: "M", value: 1000},
+                 {number: "CM", value: 900},
+                 {number: "D", value: 500},
+                 {number: "CD", value: 400},
+                 {number: "C", value: 100},
+                 {number: "XC", value: 90},
+                 {number: "L", value: 50},
+                 {number: "XL", value: 40},
+                 {number: "X", value: 10},
+                 {number: "IX", value: 9},
+                 {number: "V", value: 5},
+                 {number: "IV", value: 4},
+                 {number: "I", value: 1}]
+
+function convertToRoman(num) {
+  var numRemaining = num;
+  var result = '';
+  for (var romanNumeral of numbers) {
+    while(romanNumeral['value'] <= numRemaining) {
+      result = result.concat(romanNumeral['number']);
+      numRemaining = numRemaining - romanNumeral['value'];
+    }
+  }
+  return result;
+}
+
+convertToRoman(36);
