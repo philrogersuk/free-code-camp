@@ -1,0 +1,27 @@
+const START_OF_STRING = "^";
+const END_OF_STRING = "$";
+const THREE_DIGITS = "[0-9]{3}";
+const THREE_DIGITS_WITH_OPTIONAL_BRACKETS =
+          "((" + THREE_DIGITS + ")|(\\(" + THREE_DIGITS + "\\)))"
+const FOUR_DIGITS = "[0-9]{4}";
+const OPTIONAL_US_PREFIX = "(1( )?)?";
+const OPTIONAL_SPACE_OR_HYPHEN = "[ \\-]?";
+
+function telephoneCheck(str) {
+  var regex = START_OF_STRING +
+    OPTIONAL_US_PREFIX +
+    THREE_DIGITS_WITH_OPTIONAL_BRACKETS +
+    OPTIONAL_SPACE_OR_HYPHEN +
+    THREE_DIGITS +
+    OPTIONAL_SPACE_OR_HYPHEN +
+    FOUR_DIGITS +
+    END_OF_STRING;
+    
+    console.log(regex);
+  let re = new RegExp(regex);
+
+  console.log(re.test(str))
+  return re.test(str);
+}
+
+telephoneCheck("2 757 622-7382");
