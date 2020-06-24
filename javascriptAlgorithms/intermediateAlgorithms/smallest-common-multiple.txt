@@ -1,0 +1,46 @@
+function mult(total, next) {
+  return total * next;
+}
+
+function isCommonMultiple(multiple, numbers) {
+  for (var num of numbers) {
+    if (0 != multiple % num) {
+      return false;
+    }
+  }
+  return true;
+}
+
+
+function smallestCommons(arr) {
+  var max = Math.max(arr[0], arr[1]);
+  var min = Math.min(arr[0], arr[1]);
+
+  var numbers = []
+  for (var i=max; i >= min ; i--) {
+    numbers[numbers.length] = i;
+  }
+
+  // smallest common multiple of all numbers in the range
+  // must be divisible by numbers[0] * numbers[1].
+  //
+  // this is because for any two given numbers the smallest
+  // common multiple is found by (x * y). We can therefore
+  // increment by this common multiple rather than testing 
+  // all possible numbers.
+  //
+  // while testing all numbers would work as a 
+  // "naive implementation", in practice it times out
+  // under these conditions
+
+  var index = 1;
+  while(true) {
+    var multiple = index * numbers[0] * numbers[1];
+    if (isCommonMultiple(multiple, numbers)) {
+      return multiple;
+    }
+    index++;
+  }
+}
+
+smallestCommons([1,5]);
